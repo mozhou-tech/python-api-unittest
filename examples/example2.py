@@ -8,6 +8,10 @@
 import requests
 import unittest
 class TestLogin(unittest.TestCase):
+
+    def __init__(self):
+        self.setUpClass()
+
     @classmethod
     def setUpClass(cls):
         cls.login_url = 'http://127.0.0.1:5000/login'
@@ -43,3 +47,8 @@ class TestLogin(unittest.TestCase):
         assert response['code'] == 200
         assert response['msg'] == 'success'
         assert response['data'] == 'info'
+
+
+if __name__ == '__main__':
+    test = TestLogin()
+    test.test_info()
