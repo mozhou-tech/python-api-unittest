@@ -9,7 +9,7 @@ class DemoApi(object):
     def __init__(self, base_url):
         self.base_url = base_url
 
-    @request(url='login', method='post')
+    @request(url='login', method='post')   # 修饰器
     def login(self, username, password):
         """
         登录接口
