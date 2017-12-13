@@ -7,7 +7,9 @@ from config import base
 class BaseTest(object):
 
     def __init__(self):
-        pass
+        # 请求URL
+        self.base_url = BaseTest.get_base_url('agency')
+        self.auth_token = BaseTest.get_auth_token()
 
     '''
     获取Api Auth Token
@@ -25,3 +27,12 @@ class BaseTest(object):
             return base.BASE_URL[entry]
         else:
             raise ValueError(u'请填写正确的Entry')
+
+    """
+    获取完整的请求URL
+    """
+    @classmethod
+    def get_full_request_url(cls, entry, api_path):
+        return cls.get_base_url(entry) + api_path
+
+
