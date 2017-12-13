@@ -4,6 +4,8 @@
 from config import base
 import requests
 from time import time
+import json
+from utils.logger import main as logger
 
 
 class BaseTest(object):
@@ -33,14 +35,44 @@ class BaseTest(object):
     """
     @classmethod
     def request(cls, params):
+        assert params['method'] in ['get', 'post', 'put', 'delete', 'option']  # 请求方法限制
         # 请求接口
-        request_start = time()
+        logger().info('starting request api: ' + cls.get_full_request_url(params['entry'], params['api_path']))
+        request_start = time()  # 开始时间
         response = getattr(requests, params['method'])(cls.get_full_request_url(params['entry'], params['api_path']), headers={
             'authorization': 'Bearer ' + cls.get_auth_token()
         }, params=params['data'])
-        request_stop = time()
-        wait_time = (request_stop - request_start) * 1000
-        return response, wait_time
+        request_stop = time()   # 结束时间
+        assert isinstance(json.loads(response.text.encode('utf8')), dict)
+
+        return {
+            'request_params': params,    # 请求参数
+            'result': {
+                'wait_time': round((request_stop - request_start) * 1000, 2),  # 请求用时
+                'status_code': response.status_code,  # 返回状态码
+                'content_length': len(response.text)
+            },
+            'content': json.loads(response.text.encode('utf8')),   # 返回原始内容
+        }
+
+    """
+    基础断言
+    """
+    @classmethod
+    def report_base(cls, r):
+        result = []
+        if not r['result']['wait_time'] <= 300:
+            result.append('请求时间超过300ms')
+        if not r['result']['status_code'] == 200:
+            result.append('状态码错误')
+        return {'desc': '，'.join(result)}
+
+    """
+    构建日志字符串
+    """
+    @classmethod
+    def log_builder(cls):
+        return {}
 
 
 
