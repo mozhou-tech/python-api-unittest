@@ -2,14 +2,14 @@
 # coding=utf-8
 
 from config import base
+import requests
+from time import time
 
 
 class BaseTest(object):
 
     def __init__(self):
-        # 请求URL
-        self.base_url = BaseTest.get_base_url('agency')
-        self.auth_token = BaseTest.get_auth_token()
+        pass
 
     '''
     获取Api Auth Token
@@ -19,20 +19,28 @@ class BaseTest(object):
         return base.AUTH_TOKEN
 
     """
-    获取基础路由
-    """
-    @classmethod
-    def get_base_url(cls, entry):
-        if entry is not None:
-            return base.BASE_URL[entry]
-        else:
-            raise ValueError(u'请填写正确的Entry')
-
-    """
     获取完整的请求URL
     """
     @classmethod
     def get_full_request_url(cls, entry, api_path):
-        return cls.get_base_url(entry) + api_path
+        if entry is not None:
+            return base.BASE_URL[entry] + api_path
+        else:
+            raise ValueError(u'请填写正确的Entry')
+
+    """
+    发起HTTP Request
+    """
+    @classmethod
+    def request(cls, params):
+        # 请求接口
+        request_start = time()
+        response = getattr(requests, params['method'])(cls.get_full_request_url(params['entry'], params['api_path']), headers={
+            'authorization': 'Bearer ' + cls.get_auth_token()
+        }, params=params['data'])
+        request_stop = time()
+        wait_time = (request_stop - request_start) * 1000
+        return response, wait_time
+
 
 
