@@ -12,11 +12,14 @@ try:
     from urlparse import urljoin
 except ImportError:
     from urllib.parse import urljoin
+
+
 class DemoApi(object):
     def __init__(self, base_url):
         self.base_url = base_url
         # 创建session实例
         self.session = Session()
+
     def login(self, username, password):
         """
         登录接口
@@ -53,7 +56,13 @@ class DemoApi(object):
         print(u'\n4、响应:')
         pprint(response)
         return response
+
+
 class TestLogin(unittest.TestCase):
+
+    def __init__(self):
+        self.setUpClass()
+
     @classmethod
     def setUpClass(cls):
         cls.base_url = 'http://127.0.0.1:5000'
@@ -76,3 +85,11 @@ class TestLogin(unittest.TestCase):
         assert response['code'] == 200
         assert response['msg'] == 'success'
         assert response['data'] == 'info'
+
+
+
+if __name__ == '__main__':
+    test = TestLogin()
+
+    test.test_login()
+    test.test_info()

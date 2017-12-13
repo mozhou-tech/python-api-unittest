@@ -26,3 +26,4 @@ utils | 所有的支撑代码都在这里，包括读取config的类、写log的
 
 ## 参考 Reference
 1. [简单实现接口自动化测试](https://www.zybuluo.com/coolfish/note/726662)
+1. [Requests中文文档](http://docs.python-requests.org/zh_CN/latest/user/quickstart.html)
