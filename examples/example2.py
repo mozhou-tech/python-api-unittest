@@ -52,3 +52,4 @@ class TestLogin(unittest.TestCase):
 if __name__ == '__main__':
     test = TestLogin()
     test.test_info()
+    test.test_login()

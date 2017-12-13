@@ -16,6 +16,7 @@ except ImportError:
 class DemoApi(object):
     def __init__(self, base_url):
         self.base_url = base_url
+
     def login(self, username, password):
         """
         登录接口
@@ -28,6 +29,7 @@ class DemoApi(object):
             'password': password
         }
         return requests.post(url, data=data).json()
+
     def get_cookies(self, username, password):
         """
         获取登录cookies
@@ -38,19 +40,27 @@ class DemoApi(object):
             'password': password
         }
         return requests.post(url, data=data).cookies
+
     def info(self, cookies):
         """
         详情接口
         """
         url = urljoin(self.base_url, 'info')
         return requests.get(url, cookies=cookies).json()
+
+
 class TestLogin(unittest.TestCase):
+
+    def __init__(self):
+        self.setUpClass()
+
     @classmethod
     def setUpClass(cls):
         cls.base_url = 'http://127.0.0.1:5000'
         cls.username = 'admin'
         cls.password = '123456'
         cls.app = DemoApi(cls.base_url)
+
     def test_login(self):
         """
         测试登录
@@ -58,6 +68,7 @@ class TestLogin(unittest.TestCase):
         response = self.app.login(self.username, self.password)
         assert response['code'] == 200
         assert response['msg'] == 'success'
+
     def test_info(self):
         """
         测试获取详情信息
@@ -67,3 +78,10 @@ class TestLogin(unittest.TestCase):
         assert response['code'] == 200
         assert response['msg'] == 'success'
         assert response['data'] == 'info'
+
+
+if __name__ == '__main__':
+    test = TestLogin()
+
+    test.test_login()
+    test.test_info()
