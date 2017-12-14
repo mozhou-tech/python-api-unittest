@@ -39,7 +39,8 @@ class BaseClass(object):
         # 请求接口
         logger().info('starting request api: ' + cls.get_full_request_url(params['entry'], params['api_path']))
         request_start = time()  # 开始时间
-        response = getattr(requests, params['method'])(cls.get_full_request_url(params['entry'], params['api_path']), headers={
+        # holder
+        response = getattr(requests, params['method'])(cls.get_full_request_url(params['entry'], params['api_path']), headers = {
             'authorization': 'Bearer ' + cls.get_auth_token()
         }, params=params['data'])
         request_stop = time()   # 结束时间
