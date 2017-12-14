@@ -3,29 +3,26 @@
 import sys
 from datetime import datetime as dt
 # 引入测试套件
-from tests.suite.order_suite import suite_main as suite_order_main
-
-
-start_time = dt.strftime(dt.now(), '%Y-%m-%d %H:%M')
+from tests.suite.suite_main import suite_main
+from utils.logger import get_logger as logger
+from openpyxl import Workbook
+from datetime import datetime as dt
+import sys,os
 
 
 # 自动测试入口
 
-
 if __name__ == '__main__':
-    report_holder = []
-    # print(u'==================== Test Begin At : ' + start_time + ' ====================')
-    report_holder += suite_order_main()
-    # print(report_holder)
 
+    report_holder = suite_main()
+    logger().info('Outputting to a excel file ...')
+    # 输出文档 基于openpyxl输出Excel
+    # 栏目：用例名,Api URL，method,结果,参数，原始返回, 响应时间
+    report_path_name = sys.path[0] + "/reports/" + dt.strftime(dt.now(), '%b%d%y%H%M') +".xlsx"
+    wb = Workbook()
+    for sheet in wb:
+        for item in report_holder:
+            sheet.append(item)
 
-
-
-
-
-
-
-
-
-# 输出文档 基于openpyxl输出Excel
-# 栏目：用例名,Api URL，method,结果,参数，原始返回, 响应时间
+    wb.save(filename=report_path_name)
+    logger().info('Report saved to '+report_path_name)

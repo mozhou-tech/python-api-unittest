@@ -28,9 +28,11 @@ def logger_for_test_case(func):
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        get_logger().info('Running TestCase: ' + func.__module__ + '.' + func.__name__)
+        testcase = func.__module__ + '.' + func.__name__
+        get_logger().info('Running TestCase: ' + testcase)
         r = func(*args, **kwargs)
-        get_logger().info(dict(r[0]['result'], **r[1]))
+        r[0]['result']['testcase'] = testcase
+        get_logger().info(dict(r[0]['result'], **r[1], **{"testcase": testcase}))
         get_logger().info('TestCase Finished.')
         return r
     return wrapper

@@ -50,7 +50,7 @@ class BaseClass(object):
             'result': {
                 'wait_time': round((request_stop - request_start) * 1000, 2),  # 请求用时
                 'status_code': response.status_code,  # 返回状态码
-                'content_length': len(response.text)
+                'content_length': len(response.text),
             },
             'content': json.loads(response.text.encode('utf8')),   # 返回原始内容
         }
