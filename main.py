@@ -4,7 +4,6 @@ import sys
 from datetime import datetime as dt
 # 引入测试套件
 from tests.suite.order_suite import suite_main as suite_order_main
-from utils.logger import main as logger
 
 
 start_time = dt.strftime(dt.now(), '%Y-%m-%d %H:%M')

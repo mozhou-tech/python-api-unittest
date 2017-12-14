@@ -5,7 +5,7 @@ from config import base
 import requests
 from time import time
 import json
-from utils.logger import main as logger
+from utils.logger import get_logger as logger
 
 
 class BaseTest(object):
@@ -67,12 +67,7 @@ class BaseTest(object):
             result.append('状态码错误')
         return {'desc': '，'.join(result)}
 
-    """
-    构建日志字符串
-    """
-    @classmethod
-    def log_builder(cls):
-        return {}
+
 
 
 

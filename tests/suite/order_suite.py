@@ -1,12 +1,13 @@
 #!/usr/bin/python
 # coding=utf-8
 
-from tests.case.agency.OrderTest import OrderTest
+from tests.case.OrderTest import OrderTest
 
 
 '''
 组织测试用例
 '''
+
 
 def suite_main():
     report_holder = []
