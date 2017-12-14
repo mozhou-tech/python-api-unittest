@@ -5,7 +5,7 @@ from tests.case.BaseClass import BaseClass
 from utils.logger import logger_for_test_case
 
 
-class OrderTest(BaseClass):
+class FinanceTest(BaseClass):
 
 
     """

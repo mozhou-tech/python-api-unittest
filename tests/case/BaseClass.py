@@ -8,7 +8,7 @@ import json
 from utils.logger import get_logger as logger
 
 
-class BaseTest(object):
+class BaseClass(object):
 
     def __init__(self):
         pass
